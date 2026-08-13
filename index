@@ -1,0 +1,2165 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>關於你· A QUIET PORTRAIT</title>
+<style>
+  /* ============ ROOT PALETTE ============ */
+  :root {
+    --oat:        #D4C5B3;
+    --oat-soft:   #E8DED2;
+    --cream:      #F5F0EA;
+    --linen:      #E2D9CE;
+    --khaki:      #B8A994;
+    --elephant:   #8C8C8C;
+    --dove:       #B5B5B5;
+    --mist:       #D0D0D0;
+    --silver:     #C8C2BC;
+    --ink:        #1A1A1A;
+    --ink-soft:   #2C2C2C;
+    --dai-blue:   #2E4A6B;
+    --dai-blue-s: #3D5F85;
+    --ochre:      #8B5E3C;
+    --ochre-s:    #B07D4F;
+    --gold:       #A68B5C;
+    --gold-s:     #C4A875;
+    --haze-pink:  #C9A8A0;
+    --sage:       #9CAF88;
+    --sage-l:     #B8C9A8;
+    --bg:         #F7F4F0;
+    --paper:      #FBF9F6;
+    --paper-shade:#F0EDE8;
+    --font-main: 'Noto Serif CJK SC', 'Noto Serif SC', 'Source Han Serif SC', 'SimSun', 'STSong', 'Songti SC', serif;
+    --font-sub:  'Noto Sans CJK SC', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-main);
+    background: var(--bg);
+    color: var(--ink-soft);
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 32px 120px;
+    position: relative;
+  }
+
+  .top-rule {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 -32px 48px;
+  }
+
+  /* ============ HEADER ============ */
+  .header {
+    text-align: center;
+    padding: 72px 0 56px;
+    position: relative;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 48px;
+    height: 1px;
+    background: var(--gold);
+  }
+  .header-eyebrow {
+    font-family: var(--font-sub);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .header-title {
+    font-family: var(--font-main);
+    font-size: 40px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: 6px;
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+  .header-title .accent {
+    color: var(--dai-blue);
+    font-weight: 500;
+  }
+  .header-sub {
+    font-family: var(--font-main);
+    font-size: 14px;
+    color: var(--elephant);
+    letter-spacing: 3px;
+    font-weight: 300;
+  }
+  .header-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .header-divider .line {
+    width: 60px;
+    height: 1px;
+    background: var(--mist);
+  }
+  .header-divider .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  /* ============ SECTION ============ */
+  .section { margin-bottom: 56px; position: relative; }
+  .section-num {
+    font-family: var(--font-sub);
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 4px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-family: var(--font-main);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: 3px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .section-title .en {
+    font-family: var(--font-sub);
+    font-size: 10px;
+    font-weight: 300;
+    color: var(--dove);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  .section-desc {
+    font-family: var(--font-main);
+    font-size: 14px;
+    color: var(--elephant);
+    margin-bottom: 28px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+  .section-line {
+    height: 1px;
+    background: linear-gradient(90deg, var(--mist), transparent);
+    margin-bottom: 32px;
+  }
+
+  /* ============ QUESTION CARD ============ */
+  .q-card {
+    background: var(--paper);
+    border: 1px solid var(--paper-shade);
+    border-radius: 2px;
+    padding: 28px 32px;
+    margin-bottom: 16px;
+    position: relative;
+    transition: all 0.4s ease;
+  }
+  .q-card:hover {
+    border-color: var(--silver);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.03);
+  }
+  .q-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 32px; bottom: 32px;
+    width: 2px;
+    background: var(--gold);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .q-card:hover::before { opacity: 1; }
+
+  .q-label {
+    font-family: var(--font-main);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .q-label .q-mark {
+    font-family: var(--font-main);
+    font-size: 11px;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    width: 20px; height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .q-hint {
+    font-family: var(--font-main);
+    font-size: 13px;
+    color: var(--elephant);
+    margin-bottom: 18px;
+    padding-left: 30px;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+  }
+
+  /* ============ INPUTS ============ */
+  .input-row {
+    padding-left: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .text-input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--mist);
+    background: transparent;
+    padding: 8px 0;
+    font-family: var(--font-main);
+    font-size: 14px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.3s;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+  }
+  .text-input::placeholder { color: var(--mist); font-weight: 300; }
+  .text-input:focus { border-bottom-color: var(--gold); }
+
+  .text-area {
+    width: 100%;
+    border: 1px solid var(--mist);
+    background: transparent;
+    padding: 14px 18px;
+    font-family: var(--font-main);
+    font-size: 14px;
+    color: var(--ink);
+    outline: none;
+    resize: vertical;
+    min-height: 72px;
+    transition: border-color 0.3s;
+    border-radius: 2px;
+    line-height: 1.9;
+    font-weight: 400;
+  }
+  .text-area::placeholder { color: var(--mist); font-weight: 300; }
+  .text-area:focus { border-color: var(--gold); }
+
+  .self-fill {
+    width: 100%;
+    border: none;
+    border-bottom: 1px dashed var(--mist);
+    background: transparent;
+    padding: 6px 0;
+    font-family: var(--font-main);
+    font-size: 13px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.3s;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+    margin-top: 10px;
+  }
+  .self-fill::placeholder { color: var(--dove); font-weight: 300; font-style: italic; }
+  .self-fill:focus { border-bottom-color: var(--gold); }
+
+  /* ============ CHIP SELECT ============ */
+  .chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 16px;
+    border: 1px solid var(--mist);
+    border-radius: 20px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+    letter-spacing: 0.5px;
+    background: transparent;
+    font-family: var(--font-main);
+    font-weight: 400;
+  }
+  .chip:hover { border-color: var(--ink); color: var(--ink); }
+  .chip.active { background: var(--ink); border-color: var(--ink); color: var(--cream); }
+
+  /* ============ COLOR SWATCHES ============ */
+  .color-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px 32px;
+    padding-left: 30px;
+  }
+  .color-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    transition: all 0.3s;
+    min-width: 60px;
+  }
+  .color-item:hover { background: var(--paper-shade); }
+  .color-item.active .color-swatch {
+    border-color: var(--ink);
+    box-shadow: 0 0 0 2px var(--bg), 0 0 0 3px var(--ink);
+  }
+  .color-item.active .color-name { color: var(--ink); font-weight: 500; }
+  .color-swatch {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  .color-name {
+    font-family: var(--font-main);
+    font-size: 11px;
+    color: var(--elephant);
+    letter-spacing: 0.5px;
+    transition: color 0.3s;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  /* ============ ENERGY SLIDER ============ */
+  .slider-wrap { padding-left: 30px; padding-right: 10px; }
+  .slider-track-container {
+    position: relative;
+    height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  .slider-track-container::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 3px;
+    background: var(--mist);
+    border-radius: 2px;
+  }
+  .slider-track-fill {
+    position: absolute;
+    left: 0; top: 50%;
+    transform: translateY(-50%);
+    height: 3px;
+    background: linear-gradient(90deg, var(--dai-blue-s), var(--gold));
+    border-radius: 2px;
+    width: 44%;
+    transition: width 0.35s ease;
+    pointer-events: none;
+  }
+  .slider-ticks {
+    position: absolute;
+    left: 0; right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+  }
+  .slider-ticks span {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--dove);
+    transition: background 0.3s;
+  }
+  .slider-ticks span.passed { background: var(--dai-blue-s); }
+  .energy-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 44px;
+    background: transparent;
+    outline: none;
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    cursor: pointer;
+  }
+  .energy-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--ink);
+    border: 3px solid var(--cream);
+    box-shadow: 0 1px 6px rgba(0,0,0,0.18);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: grab;
+  }
+  .energy-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.12);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+  }
+  .energy-slider::-moz-range-thumb {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--ink);
+    border: 3px solid var(--cream);
+    box-shadow: 0 1px 6px rgba(0,0,0,0.18);
+    cursor: grab;
+  }
+  .slider-display {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-top: 6px;
+  }
+  .slider-value {
+    font-family: var(--font-main);
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: 1px;
+    line-height: 1;
+  }
+  .slider-label {
+    font-family: var(--font-sub);
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .slider-ends {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  .slider-end {
+    font-family: var(--font-main);
+    font-size: 12px;
+    color: var(--elephant);
+    letter-spacing: 1px;
+  }
+  .slider-end.left::before { content: '◀ '; font-size: 9px; color: var(--dove); }
+  .slider-end.right::after { content: ' ▶'; font-size: 9px; color: var(--dove); }
+
+  /* ============ WEATHER ICONS ============ */
+  .weather-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding-left: 30px;
+  }
+  .weather-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    padding: 10px 14px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: all 0.3s;
+  }
+  .weather-item:hover { background: var(--paper-shade); }
+  .weather-item.active { border-color: var(--ink); background: var(--oat-soft); }
+  .weather-icon { font-size: 26px; filter: grayscale(0.15); }
+  .weather-name {
+    font-size: 12px;
+    color: var(--ink-soft);
+    letter-spacing: 1px;
+    font-family: var(--font-main);
+  }
+
+  /* ============ MBTI ============ */
+  .mbti-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding-left: 30px;
+    max-width: 420px;
+  }
+  .mbti-cell {
+    padding: 10px 8px;
+    text-align: center;
+    border: 1px solid var(--mist);
+    border-radius: 2px;
+    font-family: var(--font-main);
+    font-size: 13px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.3s;
+    letter-spacing: 1px;
+    font-weight: 500;
+  }
+  .mbti-cell:hover { border-color: var(--ink); color: var(--ink); }
+  .mbti-cell.active { background: var(--ink); border-color: var(--ink); color: var(--cream); }
+
+  /* ============ RATING ROW (1-5 stars) ============ */
+  .rating-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-left: 30px;
+  }
+  .rating-star {
+    font-size: 22px;
+    color: var(--mist);
+    cursor: pointer;
+    transition: color 0.2s, transform 0.2s;
+    user-select: none;
+  }
+  .rating-star:hover { transform: scale(1.15); }
+  .rating-star.active { color: var(--gold); }
+  .rating-label {
+    font-family: var(--font-main);
+    font-size: 13px;
+    color: var(--elephant);
+    margin-left: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ============ YES/NO TOGGLE ============ */
+  .yn-row {
+    display: flex;
+    gap: 12px;
+    padding-left: 30px;
+  }
+  .yn-btn {
+    padding: 6px 24px;
+    border: 1px solid var(--mist);
+    border-radius: 20px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.3s;
+    background: transparent;
+    font-family: var(--font-main);
+    letter-spacing: 1px;
+  }
+  .yn-btn:hover { border-color: var(--ink); }
+  .yn-btn.active { background: var(--ink); border-color: var(--ink); color: var(--cream); }
+
+  /* ============ TIME PICKER (simple) ============ */
+  .time-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-left: 30px;
+  }
+
+  /* ============ FOOTER ============ */
+  .footer {
+    text-align: center;
+    padding: 64px 0 0;
+    position: relative;
+  }
+  .footer::before {
+    content: '';
+    display: block;
+    width: 1px; height: 40px;
+    background: linear-gradient(180deg, var(--gold), transparent);
+    margin: 0 auto 32px;
+  }
+  .footer-text {
+    font-family: var(--font-main);
+    font-size: 13px;
+    color: var(--dove);
+    letter-spacing: 3px;
+    font-weight: 300;
+  }
+  .footer-sub {
+    font-family: var(--font-sub);
+    font-size: 11px;
+    color: var(--mist);
+    margin-top: 8px;
+    letter-spacing: 2px;
+  }
+  .footer-signature {
+    font-family: var(--font-sub);
+    font-size: 11px;
+    color: var(--mist);
+    margin-top: 4px;
+    letter-spacing: 2px;
+    font-weight: 400;
+  }
+
+  /* ============ SUBMIT BTN ============ */
+  .submit-wrap { text-align: center; margin-top: 48px; }
+  .submit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 48px;
+    background: var(--ink);
+    color: var(--cream);
+    border: none;
+    border-radius: 2px;
+    font-family: var(--font-main);
+    font-size: 14px;
+    letter-spacing: 4px;
+    cursor: pointer;
+    transition: all 0.4s;
+    font-weight: 500;
+  }
+  .submit-btn:hover { background: var(--dai-blue); letter-spacing: 6px; }
+  .submit-btn .arrow { transition: transform 0.3s; }
+  .submit-btn:hover .arrow { transform: translateX(4px); }
+
+  /* ============ DECORATIVE ============ */
+  .bg-texture {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.4;
+    background:
+      radial-gradient(ellipse at 10% 20%, rgba(212,197,179,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 80%, rgba(46,74,107,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(201,168,160,0.05) 0%, transparent 60%);
+  }
+  .v-text {
+    position: fixed;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    writing-mode: vertical-rl;
+    font-family: var(--font-main);
+    font-size: 10px;
+    color: var(--mist);
+    letter-spacing: 8px;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  /* ============ 導出結果面板 ============ */
+  .result-panel {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(26,26,26,0.6);
+    z-index: 9999;
+    overflow-y: auto;
+    padding: 40px 16px;
+  }
+  .result-panel.show { display: block; }
+  .result-box {
+    max-width: 680px;
+    margin: 0 auto;
+    background: var(--paper);
+    border-radius: 4px;
+    padding: 48px 40px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .result-box .close-btn {
+    position: absolute;
+    top: 16px; right: 16px;
+    width: 32px; height: 32px;
+    border: 1px solid var(--mist);
+    background: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--elephant);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+  }
+  .result-box .close-btn:hover { border-color: var(--ink); color: var(--ink); }
+  .result-content {
+    font-family: var(--font-main);
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 2;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  .result-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+  .result-actions button {
+    padding: 10px 28px;
+    border: 1px solid var(--ink);
+    background: var(--ink);
+    color: var(--cream);
+    font-family: var(--font-main);
+    font-size: 13px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .result-actions button.secondary {
+    background: transparent;
+    color: var(--ink);
+  }
+  .result-actions button:hover { background: var(--dai-blue); border-color: var(--dai-blue); color: var(--cream); }
+  .result-actions button.secondary:hover { background: var(--ink); color: var(--cream); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 640px) {
+    .page { padding: 0 20px 80px; }
+    .header-title { font-size: 28px; letter-spacing: 4px; }
+    .mbti-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    .mbti-cell { font-size: 11px; padding: 8px 4px; }
+    .v-text { display: none; }
+    .q-card { padding: 22px 20px; }
+    .input-row, .color-row, .weather-row, .mbti-grid, .rating-row, .yn-row, .time-row { padding-left: 0; }
+    .q-hint { padding-left: 0; }
+    .result-box { padding: 32px 20px; }
+  }
+
+  /* ============ PRINT STYLES ============ */
+  @media print {
+    @page { margin: 20mm 18mm; size: A4; }
+    body {
+      background: #fff !important;
+      color: #1A1A1A !important;
+      font-size: 12pt;
+      line-height: 1.8;
+    }
+    .bg-texture, .v-text { display: none !important; }
+    .submit-wrap { display: none !important; }
+    .page { max-width: 100%; padding: 0; }
+    .q-card {
+      break-inside: avoid;
+      border: 1px solid #D0D0D0 !important;
+      background: #fff !important;
+      box-shadow: none !important;
+      padding: 16px 20px !important;
+      margin-bottom: 12px !important;
+    }
+    .q-card::before { display: none !important; }
+    .section { break-inside: avoid; margin-bottom: 32px !important; }
+    .header { padding: 24px 0 32px !important; }
+    .header-title { font-size: 28pt !important; }
+    .section-title { font-size: 16pt !important; }
+    .q-label { font-size: 12pt !important; }
+    .text-input, .text-area, .self-fill {
+      border-color: #C8C2BC !important;
+      color: #1A1A1A !important;
+    }
+    .chip {
+      border: 1px solid #C8C2BC !important;
+      color: #2C2C2C !important;
+      font-size: 10pt !important;
+      padding: 4px 12px !important;
+    }
+    .chip.active {
+      background: #1A1A1A !important;
+      color: #F5F0EA !important;
+      border-color: #1A1A1A !important;
+    }
+    .color-swatch { width: 36px !important; height: 36px !important; }
+    .slider-wrap { display: none !important; }
+    .energy-slider { display: none !important; }
+    .slider-display { display: block !important; }
+    .top-rule { margin: 0 0 24px !important; }
+    .footer { padding: 32px 0 0 !important; }
+    .print-answer {
+      display: block !important;
+      font-size: 11pt !important;
+      color: #2C2C2C !important;
+      padding-left: 30px !important;
+      margin-top: 6px !important;
+      white-space: pre-wrap !important;
+      word-break: break-all !important;
+    }
+    .rating-star { font-size: 14pt !important; }
+  }
+
+  .print-answer { display: none; }
+
+  /* ============ ANIMATIONS ============ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .section { animation: fadeUp 0.6s ease forwards; }
+</style>
+</head>
+<body>
+
+<div class="bg-texture"></div>
+<div class="v-text">認 識 你 是 件 溫 柔 的 事</div>
+
+<div class="page">
+
+  <!-- ========== HEADER ========== -->
+  <header class="header">
+    <div class="header-eyebrow">PERSONAL · PORTRAIT</div>
+    <h1 class="header-title">關於<span class="accent">你</span>的一封信</h1>
+    <p class="header-sub">把這份問卷當作一封寫給自己的慢信，慢慢填，不必急</p>
+    <div class="header-divider">
+      <span class="line"></span>
+      <span class="dot"></span>
+      <span class="line"></span>
+    </div>
+  </header>
+
+  <div class="top-rule"></div>
+
+  <!-- ========== SECTION 1: 基本檔案 ========== -->
+  <section class="section">
+    <div class="section-num">CHAPTER 01</div>
+    <div class="section-title"><span>基本檔案</span><span class="en">Basic Profile</span></div>
+    <p class="section-desc">從最簡單的開始，像翻開一本書的扉頁。</p>
+    <div class="section-line"></div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你的名字（或希望被稱呼的稱呼）</div>
+      <p class="q-hint">可以是真名、暱稱、或者一個只有朋友才知道的代號</p>
+      <div class="input-row">
+        <input class="text-input" type="text" placeholder="在這裡寫下你的名字……">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你的年齡 / 星座 / 生日</div>
+      <p class="q-hint">星座不說也可以，但我們想知道你是哪個季節的小孩</p>
+      <div class="input-row">
+        <input class="text-input" type="text" placeholder="例如：18歲 · 天蠍座 · 11月14日">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你現在住在哪裡？理想中的城市是？</div>
+      <p class="q-hint">現居地于夢想之城，可以是一個地方，也可以是兩個截然不同的角落</p>
+      <div class="input-row">
+        <input class="text-input" type="text" placeholder="現居：　　　　理想城市：">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你的职业/ 學校 / 正在做的事</div>
+      <p class="q-hint">一句話概括現在的身分，也可以加上「其實我真正想做的是……」</p>
+      <div class="input-row">
+        <input class="text-input" type="text" placeholder="例如：設計師 / 学生 / 正在gap year旅行">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你最喜歡的數字 / 幸運符號</div>
+      <p class="q-hint">不一定真的「幸運」，只是對你有特殊意義的數字或符號</p>
+      <div class="input-row">
+        <input class="text-input" type="text" placeholder="例如：7 / 月亮 / 三角 / 某個日期">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 2: 性格側寫 ========== -->
+  <section class="section">
+    <div class="section-num">CHAPTER 02</div>
+    <div class="section-title"><span>性格側寫</span><span class="en">Personality</span></div>
+    <p class="section-desc">不是標籤，是一組柔和的光影輪廓。</p>
+    <div class="section-line"></div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你覺得自己最大的性格特质是？</div>
+      <p class="q-hint">選 2-4 個最貼近你的詞，也可以自己寫</p>
+      <div class="chip-group">
+        <span class="chip">安靜內斂</span>
+        <span class="chip">溫柔細膩</span>
+        <span class="chip">理性冷靜</span>
+        <span class="chip">熱情直率</span>
+        <span class="chip">幽默風趣</span>
+        <span class="chip">敏感多思</span>
+        <span class="chip">獨立堅韌</span>
+        <span class="chip">隨遇而安</span>
+        <span class="chip">追求完美</span>
+        <span class="chip">好奇心旺盛</span>
+        <span class="chip">慢熱但真誠</span>
+        <span class="chip">內斂深情</span>
+        <span class="chip">自由不羈</span>
+        <span class="chip">責任感重</span>
+      </div>
+      <div class="input-row">
+        <input class="self-fill" type="text" placeholder="其他（自行填寫）……">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>別人最常怎麼形容你？</div>
+      <p class="q-hint">朋友、家人、同事眼中的你——哪怕是不那麼「正面」的也沒關係</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="比如：『你總是把事情想得太周到，有時候太替別人著想了』"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你最近一次大笑是因為什麼？</div>
+      <p class="q-hint">具體的瞬間，越細節越好</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="哪怕只是因為一隻貓摔了一跤……"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你最近一次流淚是因為什麼？</div>
+      <p class="q-hint">不必是悲傷，感動、憤怒、無力感都算</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="比如：『看了一部紀錄片，結尾那句話戳到了』"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>社交電量：你更傾向於——</div>
+      <p class="q-hint">滑動選擇你的社交能量值 · 1 = 獨處充電中，10 = 人群永動機</p>
+      <div class="slider-wrap">
+        <div class="slider-track-container">
+          <div class="slider-track-fill" id="sliderFill"></div>
+          <input type="range" min="1" max="10" value="5" class="energy-slider" id="energySlider">
+          <div class="slider-ticks">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+        <div class="slider-display">
+          <span class="slider-value" id="sliderValue">5</span>
+          <span class="slider-label" id="sliderLabel">平衡型</span>
+        </div>
+        <div class="slider-ends">
+          <span class="slider-end left">獨處充電</span>
+          <span class="slider-end right">人群發電</span>
+        </div>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你覺得自己最大的優點是？</div>
+      <p class="q-hint">不用謙虛，這題只我可見</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="比如：『我對朋友的感受很敏銳，總能在對的時機出現』"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你覺得自己最需要改進的地方？</div>
+      <p class="q-hint">誠實面對自己，這裡沒有對錯</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="比如：『太容易拖延，尤其是面對不喜歡的事』"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你身上最「不像你」的一個特質？</div>
+      <p class="q-hint">外表冷淡內心戏多？看起來隨性其實很谨慎？</p>
+      <div class="input-row">
+        <input class="text-input" type="text" placeholder="例如：『大家都覺得我很安靜，但其實我內心超吵』">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 3: 思維印記 ========== -->
+  <section class="section">
+    <div class="section-num">CHAPTER 03</div>
+    <div class="section-title"><span>思維印記</span><span class="en">Mind & MBTI</span></div>
+    <p class="section-desc">十六型人格只是一個入口，真正的風景在裡面。</p>
+    <div class="section-line"></div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你的 MBTI 是？</div>
+      <p class="q-hint">點選你的四字母代碼，不確定也沒關係</p>
+      <div class="mbti-grid">
+        <div class="mbti-cell">INTJ</div>
+        <div class="mbti-cell">INTP</div>
+        <div class="mbti-cell">ENTJ</div>
+        <div class="mbti-cell">ENTP</div>
+        <div class="mbti-cell">INFJ</div>
+        <div class="mbti-cell">INFP</div>
+        <div class="mbti-cell">ENFJ</div>
+        <div class="mbti-cell">ENFP</div>
+        <div class="mbti-cell">ISTJ</div>
+        <div class="mbti-cell">ISFJ</div>
+        <div class="mbti-cell">ESTJ</div>
+        <div class="mbti-cell">ESFJ</div>
+        <div class="mbti-cell">ISTP</div>
+        <div class="mbti-cell">ISFP</div>
+        <div class="mbti-cell">ESTP</div>
+        <div class="mbti-cell">ESFP</div>
+      </div>
+      <div class="input-row" style="margin-top:12px;">
+        <input class="self-fill" type="text" placeholder="如果不確定或想補充，可以在這裡寫……">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你覺得 MBTI 準嗎？哪裡最準 / 最不準？</div>
+      <p class="q-hint">自由發揮，吐槽也可以</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="比如：『INFP 的內耗部分太準了，但說我浪漫我真的不敢當……』"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>面對压力時，你典型的反应是？</div>
+      <p class="q-hint">崩潰、暴走、沉默、暴食、瘋狂整理房間——都算</p>
+      <div class="chip-group">
+        <span class="chip">獨處消化</span>
+        <span class="chip">找人傾訴</span>
+        <span class="chip">瘋狂工作</span>
+        <span class="chip">大吃一頓</span>
+        <span class="chip">睡一覺再說</span>
+        <span class="chip">運動發洩</span>
+        <span class="chip">購物療癒</span>
+        <span class="chip">創作表達</span>
+        <span class="chip">情緒爆發</span>
+        <span class="chip">逃避裝沒事</span>
+      </div>
+      <div class="input-row">
+        <input class="self-fill" type="text" placeholder="其他反應（自行填寫）……">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你做決定時，通常聽從——</div>
+      <p class="q-hint">理性分析？直覺？還是問身邊的人？</p>
+      <div class="chip-group">
+        <span class="chip">理性分析</span>
+        <span class="chip">直覺 gut feeling</span>
+        <span class="chip">問家人</span>
+        <span class="chip">問朋友</span>
+        <span class="chip">拋硬幣</span>
+        <span class="chip">拖到最後一刻</span>
+        <span class="chip">列優缺點表</span>
+      </div>
+      <div class="input-row">
+        <input class="self-fill" type="text" placeholder="其他方式（自行填寫）……">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你最害怕的一件事（非物理層面）</div>
+      <p class="q-hint">比如「被誤解」「失去重要的人」「一輩子平庸」</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="越具體越好……"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 4: 味覺地圖 ========== -->
+  <section class="section">
+    <div class="section-num">CHAPTER 04</div>
+    <div class="section-title"><span>味覺地圖</span><span class="en">Taste & Craving</span></div>
+    <p class="section-desc">食物是最私人的記憶容器。</p>
+    <div class="section-line"></div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你最喜歡的食物（可以列好幾個）</div>
+      <p class="q-hint">不分早晚三餐，任何讓你心動的都算</p>
+      <div class="chip-group">
+        <span class="chip">拉麵</span>
+        <span class="chip">壽司</span>
+        <span class="chip">火鍋</span>
+        <span class="chip">披薩</span>
+        <span class="chip">咖哩</span>
+        <span class="chip">牛排</span>
+        <span class="chip">餃子</span>
+        <span class="chip">甜點</span>
+        <span class="chip">水果</span>
+        <span class="chip">冰淇淋</span>
+        <span class="chip">巧克力</span>
+        <span class="chip">茶飲</span>
+        <span class="chip">咖啡</span>
+        <span class="chip">滷味</span>
+        <span class="chip">粥</span>
+        <span class="chip">日式定食</span>
+        <span class="chip">泰式料理</span>
+        <span class="chip">義大利麵</span>
+      </div>
+      <div class="input-row">
+        <input class="self-fill" type="text" placeholder="其他喜歡的食物（自行填寫）……">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你有什麼忌口 / 過敏 / 絕對不吃？</div>
+      <p class="q-hint">這題很重要——請誠實，我會記住</p>
+      <div class="chip-group">
+        <span class="chip">花生 / 堅果</span>
+        <span class="chip">海鮮 / 貝類</span>
+        <span class="chip">牛奶 / 乳糖</span>
+        <span class="chip">雞蛋</span>
+        <span class="chip">辣</span>
+        <span class="chip">香菜</span>
+        <span class="chip">蔥薑蒜</span>
+        <span class="chip">苦味</span>
+        <span class="chip">酸味</span>
+        <span class="chip">內臟</span>
+        <span class="chip">生冷</span>
+        <span class="chip">素食</span>
+        <span class="chip">不吃牛</span>
+        <span class="chip">不吃豬</span>
+        <span class="chip">沒有忌口</span>
+      </div>
+      <div class="input-row">
+        <input class="self-fill" type="text" placeholder="其他忌口或過敏（自行填寫）……">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>最想念的一道菜 / 一個味道</div>
+      <p class="q-hint">可能是媽媽做的飯、某次旅行吃到的、或者童年的零食</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="描述那道菜，以及它背後的故事……"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>飲料偏好：咖啡 / 茶 / 其他？</div>
+      <p class="q-hint">連「喝什麼都不重要反正要有糖」也可以</p>
+      <div class="chip-group">
+        <span class="chip">黑咖啡</span>
+        <span class="chip">拿鐵</span>
+        <span class="chip">手沖</span>
+        <span class="chip">綠茶</span>
+        <span class="chip">紅茶</span>
+        <span class="chip">烏龍</span>
+        <span class="chip">奶茶</span>
+        <span class="chip">果汁</span>
+        <span class="chip">氣泡水</span>
+        <span class="chip">牛奶</span>
+        <span class="chip">酒類</span>
+        <span class="chip">不喝</span>
+      </div>
+      <div class="input-row">
+        <input class="self-fill" type="text" placeholder="其他飲料偏好（自行填寫）……">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你心目中「完美的一餐」長什麼樣？</div>
+      <p class="q-hint">場景、食物、跟誰一起吃、當時的天氣——盡量具體</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="比如：『夏天的傍晚，海邊的小店，生魚片定食，跟最好的人』"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你會為了食物專程去一個地方嗎？</div>
+      <p class="q-hint">比如「為了一碗牛肉麵去台南」「為了抹茶去宇治」「為了大阪燒去大阪」</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="說說你的「美食朝聖」清單……"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 5: 色彩感知 ========== -->
+  <section class="section">
+    <div class="section-num">CHAPTER 05</div>
+    <div class="section-title"><span>色彩感知</span><span class="en">Color Palette</span></div>
+    <p class="section-desc">顏色是情緒的密碼，選出讓你安心的那幾個。</p>
+    <div class="section-line"></div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你最喜歡的顏色（可多選）</div>
+      <p class="q-hint">點擊色塊選擇，名稱直接顯示在下方</p>
+      <div class="color-row">
+        <div class="color-item" data-color="燕麥">
+          <div class="color-swatch" style="background:#D4C5B3"></div>
+          <span class="color-name">燕麥</span>
+        </div>
+        <div class="color-item" data-color="大象灰">
+          <div class="color-swatch" style="background:#8C8C8C"></div>
+          <span class="color-name">大象灰</span>
+        </div>
+        <div class="color-item" data-color="奶油白">
+          <div class="color-swatch" style="background:#F5F0EA; border: 2px solid #E0E0E0;"></div>
+          <span class="color-name">奶油白</span>
+        </div>
+        <div class="color-item" data-color="黛藍">
+          <div class="color-swatch" style="background:#2E4A6B"></div>
+          <span class="color-name">黛藍</span>
+        </div>
+        <div class="color-item" data-color="赭石">
+          <div class="color-swatch" style="background:#8B5E3C"></div>
+          <span class="color-name">赭石</span>
+        </div>
+        <div class="color-item" data-color="霧霾粉">
+          <div class="color-swatch" style="background:#C9A8A0"></div>
+          <span class="color-name">霧霾粉</span>
+        </div>
+        <div class="color-item" data-color="鼠尾草綠">
+          <div class="color-swatch" style="background:#9CAF88"></div>
+          <span class="color-name">鼠尾草綠</span>
+        </div>
+        <div class="color-item" data-color="亞麻">
+          <div class="color-swatch" style="background:#E2D9CE; border: 2px solid #D5D5D5;"></div>
+          <span class="color-name">亞麻</span>
+        </div>
+        <div class="color-item" data-color="啞光金">
+          <div class="color-swatch" style="background:#A68B5C"></div>
+          <span class="color-name">啞光金</span>
+        </div>
+        <div class="color-item" data-color="碳黑">
+          <div class="color-swatch" style="background:#1A1A1A"></div>
+          <span class="color-name">碳黑</span>
+        </div>
+        <div class="color-item" data-color="赭石暖灰">
+          <div class="color-swatch" style="background:#B8A994"></div>
+          <span class="color-name">赭石暖灰</span>
+        </div>
+        <div class="color-item" data-color="黛藍暈">
+          <div class="color-swatch" style="background:#3D5F85"></div>
+          <span class="color-name">黛藍暈</span>
+        </div>
+      </div>
+      <div class="input-row" style="margin-top:8px;">
+        <input class="self-fill" type="text" placeholder="其他喜歡的顏色（自行填寫）……">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>如果要用一種顏色形容你現在的狀态，是？</div>
+      <p class="q-hint">不一定要從上面選，任何顏色都可以</p>
+      <div class="input-row">
+        <input class="text-input" type="text" placeholder="例如：霧霾藍——有點悶但還算平靜">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>穿搭風格偏好</div>
+      <p class="q-hint">日常風格，不是「理想中」而是「實際上」</p>
+      <div class="chip-group">
+        <span class="chip">老錢風</span>
+        <span class="chip">極簡</span>
+        <span class="chip">日系</span>
+        <span class="chip">法式</span>
+        <span class="chip">街頭</span>
+        <span class="chip">復古</span>
+        <span class="chip">學院</span>
+        <span class="chip">運動</span>
+        <span class="chip">波西米亞</span>
+        <span class="chip">中性</span>
+        <span class="chip">Y2K</span>
+        <span class="chip">什麼都穿</span>
+      </div>
+      <div class="input-row">
+        <input class="self-fill" type="text" placeholder="其他風格（自行填寫）……">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你買東西時最在意的是？</div>
+      <p class="q-hint">材質？顏色？品牌？價格？還是「感覺對不對」？</p>
+      <div class="chip-group">
+        <span class="chip">質感 / 材質</span>
+        <span class="chip">顏色</span>
+        <span class="chip">品牌</span>
+        <span class="chip">價格</span>
+        <span class="chip">實用性</span>
+        <span class="chip">設計感</span>
+        <span class="chip">稀有度</span>
+        <span class="chip">「感覺」</span>
+      </div>
+      <div class="input-row">
+        <input class="self-fill" type="text" placeholder="其他原因（自行填寫）……">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 6: 天氣與自然 ========== -->
+  <section class="section">
+    <div class="section-num">CHAPTER 06</div>
+    <div class="section-title"><span>天氣與自然</span><span class="en">Weather & Nature</span></div>
+    <p class="section-desc">我們都住在某種天氣裡，不只是指溫度。</p>
+    <div class="section-line"></div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你最喜歡的天氣是？</div>
+      <p class="q-hint">選出讓你感覺最像「自己」的天氣，也可以自己寫</p>
+      <div class="weather-row">
+        <div class="weather-item"><span class="weather-icon">☀️</span><span class="weather-name">晴朗</span></div>
+        <div class="weather-item"><span class="weather-icon">⛅</span><span class="weather-name">多雲</span></div>
+        <div class="weather-item"><span class="weather-icon">🌧️</span><span class="weather-name">細雨</span></div>
+        <div class="weather-item"><span class="weather-icon">⛈️</span><span class="weather-name">雷陣雨</span></div>
+        <div class="weather-item"><span class="weather-icon">🌫️</span><span class="weather-name">霧</span></div>
+        <div class="weather-item"><span class="weather-icon">❄️</span><span class="weather-name">雪</span></div>
+        <div class="weather-item"><span class="weather-icon">🍂</span><span class="weather-name">秋風</span></div>
+        <div class="weather-item"><span class="weather-icon">🌿</span><span class="weather-name">春日</span></div>
+      </div>
+      <div class="input-row" style="margin-top:12px;">
+        <input class="self-fill" type="text" placeholder="其他天氣（自行填寫，如：颱風天窩在家）……">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>最喜歡的季節？</div>
+      <p class="q-hint">以及——為什麼？</p>
+      <div class="chip-group">
+        <span class="chip">春 · 萬物復甦</span>
+        <span class="chip">夏 · 烈日蟬鳴</span>
+        <span class="chip">秋 · 落葉溫柔</span>
+        <span class="chip">冬 · 安靜沉澱</span>
+      </div>
+      <div class="input-row" style="margin-top:14px;">
+        <textarea class="text-area" placeholder="那個季節裡，有什麼特別的記憶嗎？"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你心目中的「理想自然場景」</div>
+      <p class="q-hint">閉上眼，第一個浮現的畫面</p>
+      <div class="chip-group">
+        <span class="chip">海邊日落</span>
+        <span class="chip">山間小屋</span>
+        <span class="chip">櫻花樹下</span>
+        <span class="chip">雪地木屋</span>
+        <span class="chip">稻田黃昏</span>
+        <span class="chip">森林深處</span>
+        <span class="chip">湖畔清晨</span>
+        <span class="chip">沙漠星空</span>
+        <span class="chip">薰衣草田</span>
+        <span class="chip">竹林小徑</span>
+      </div>
+      <div class="input-row">
+        <input class="self-fill" type="text" placeholder="其他場景（自行填寫）……">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你最喜歡的時刻（一天之中）</div>
+      <p class="q-hint">清晨五點？黃昏六點？深夜兩點？為什麼？</p>
+      <div class="chip-group">
+        <span class="chip">清晨 5-7點</span>
+        <span class="chip">上午 8-11點</span>
+        <span class="chip">正午 12-14點</span>
+        <span class="chip">下午 15-17點</span>
+        <span class="chip">黃昏 17-19點</span>
+        <span class="chip">夜晚 20-23點</span>
+        <span class="chip">深夜 0-4點</span>
+      </div>
+      <div class="input-row" style="margin-top:14px;">
+        <textarea class="text-area" placeholder="為什麼這個時刻特別？光線、聲音、還是心情？"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 7: 人際印記 ========== -->
+  <section class="section">
+    <div class="section-num">CHAPTER 07</div>
+    <div class="section-title"><span>人際印記</span><span class="en">People & Bonds</span></div>
+    <p class="section-desc">關於你喜歡的人、信任的人、和那些無法取代的關係。</p>
+    <div class="section-line"></div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你最欣賞的朋友特質是？</div>
+      <p class="q-hint">選 2-3 個你最在乎的</p>
+      <div class="chip-group">
+        <span class="chip">真誠坦率</span>
+        <span class="chip">幽默有趣</span>
+        <span class="chip">安靜陪伴</span>
+        <span class="chip">聰明有見地</span>
+        <span class="chip">情緒穩定</span>
+        <span class="chip">會照顧人</span>
+        <span class="chip">有邊界感</span>
+        <span class="chip">共趣相投</span>
+        <span class="chip">可靠守信</span>
+        <span class="chip">敢說真話</span>
+      </div>
+      <div class="input-row">
+        <input class="self-fill" type="text" placeholder="其他特質（自行填寫）……">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你最受不了的朋友行為？</div>
+      <p class="q-hint">誠實說，這能幫我們更了解你</p>
+      <div class="chip-group">
+        <span class="chip">說謊</span>
+        <span class="chip">放鴿子</span>
+        <span class="chip">已讀不回</span>
+        <span class="chip">情緒勒索</span>
+        <span class="chip">背後議論</span>
+        <span class="chip">過度黏人</span>
+        <span class="chip">愛比較</span>
+        <span class="chip">不守時</span>
+        <span class="chip">借錢不還</span>
+        <span class="chip">過度打探隱私</span>
+      </div>
+      <div class="input-row">
+        <input class="self-fill" type="text" placeholder="其他行為（自行填寫）……">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你希望朋友怎麼對待你？</div>
+      <p class="q-hint">具體一點，比如「不要突然發一大段語音」之類的</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="比如：『忙的時候不用硬聊，但偶爾記得我就可以了』"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你覺得自己對朋友來說，是什麼樣的存在？</div>
+      <p class="q-hint">溫柔的傾聽者？搞笑擔當？還是那個總在解決問題的人？</p>
+      <div class="input-row">
+        <input class="text-input" type="text" placeholder="比如：『大概是那個大家難過時會找的人吧』">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你最容易對什麼樣的人產生好感？</div>
+      <p class="q-hint">不一定要是戀愛，純粹的欣賞也算</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="比如：『認真做自己的事、不刻意討好任何人的人』"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你覺得「好朋友」的定義是？</div>
+      <p class="q-hint">不是字典解釋，是你心裡那把尺</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="比如：『不用每天聊天，但見面時像昨天才見過』"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 8: 小愛好與日常 ========== -->
+  <section class="section">
+    <div class="section-num">CHAPTER 08</div>
+    <div class="section-title"><span>小愛好與日常</span><span class="en">Little Joys</span></div>
+    <p class="section-desc">那些不值一提卻讓生活發光的小事。</p>
+    <div class="section-line"></div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你下班 / 下課後最常做的事</div>
+      <p class="q-hint">真實的日常，不是理想日程</p>
+      <div class="chip-group">
+        <span class="chip">追劇 / 追番</span>
+        <span class="chip">打遊戲</span>
+        <span class="chip">聽音樂</span>
+        <span class="chip">閱讀</span>
+        <span class="chip">散步</span>
+        <span class="chip">做飯</span>
+        <span class="chip">刷短影音</span>
+        <span class="chip">發呆</span>
+        <span class="chip">運動</span>
+        <span class="chip">整理房間</span>
+        <span class="chip">泡澡</span>
+        <span class="chip">寫日記</span>
+        <span class="chip">逛街</span>
+        <span class="chip">拍照</span>
+      </div>
+      <div class="input-row">
+        <input class="self-fill" type="text" placeholder="其他日常（自行填寫）……">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>最近迷上的事物</div>
+      <p class="q-hint">任何領域——一首歌、一個人、一種食物、一個App都行</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="比如：『最近迷上了手沖咖啡，每天早起磨豆子超療癒』"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你的收藏癖 / 奇怪堅持</div>
+      <p class="q-hint">比如「只喝某牌礦泉水」「手機電量必須滿格才出門」</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="每個人都有一點怪癖，那才是可愛的地方……"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>如果突然有三天完全自由的時間，你會——</div>
+      <p class="q-hint">不設限，不考慮預算，純粹想像</p>
+      <div class="chip-group">
+        <span class="chip">去旅行</span>
+        <span class="chip">宅家追劇</span>
+        <span class="chip">學新技能</span>
+        <span class="chip">約朋友聚會</span>
+        <span class="chip">獨自散步</span>
+        <span class="chip">大睡三天</span>
+        <span class="chip">去展覽 / 看電影</span>
+        <span class="chip">做手工 / 創作</span>
+        <span class="chip">野營 / 露營</span>
+        <span class="chip">去咖啡館發呆</span>
+      </div>
+      <div class="input-row">
+        <input class="self-fill" type="text" placeholder="其他想法（自行填寫）……">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你睡前最後一件事通常是？</div>
+      <p class="q-hint">刷手機？看書？想心事？聽白噪音？</p>
+      <div class="chip-group">
+        <span class="chip">刷手機</span>
+        <span class="chip">看書</span>
+        <span class="chip">想明天的事</span>
+        <span class="chip">聽音樂 / 播客</span>
+        <span class="chip">寫日記</span>
+        <span class="chip">冥想 / 深呼吸</span>
+        <span class="chip">跟人聊天</span>
+        <span class="chip">倒頭就睡</span>
+      </div>
+      <div class="input-row">
+        <input class="self-fill" type="text" placeholder="其他習慣（自行填寫）……">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你最喜歡的感官享受是？</div>
+      <p class="q-hint">哪一種感官最容易讓你覺得「活著真好」？</p>
+      <div class="chip-group">
+        <span class="chip">好聞的香氣</span>
+        <span class="chip">好聽的音樂</span>
+        <span class="chip">好摸的材質</span>
+        <span class="chip">好看的風景</span>
+        <span class="chip">好吃的東西</span>
+        <span class="chip">溫暖的陽光</span>
+        <span class="chip">清新的空氣</span>
+        <span class="chip">舒服的水溫</span>
+      </div>
+      <div class="input-row">
+        <input class="self-fill" type="text" placeholder="其他感官體驗（自行填寫）……">
+      </div>
+      <div class="print-answer"></div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 9: 深層次 ========== -->
+  <section class="section">
+    <div class="section-num">CHAPTER 09</div>
+    <div class="section-title"><span>深層次</span><span class="en">A Little Deeper</span></div>
+    <p class="section-desc">最後幾題，可以慢慢想，不必急著回答。</p>
+    <div class="section-line"></div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>最近讓你感到幸福的一件小事</div>
+      <p class="q-hint">越小越好，最好小到別人覺得不值一提</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="比如：『今天早上陽光剛好照在枕頭上，多賴了十分鐘床』"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你有什麼一直想做卻還沒做的事？</div>
+      <p class="q-hint">大夢想或小願望都可以</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="比如：『一個人去京都住一週，每天只逛寺廟和咖啡館』"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你希望十年後的自己是什麼樣子？</div>
+      <p class="q-hint">不必是事業有成，可以是「還喜歡自己」這種答案</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="用三個形容詞，或一段話，都可以……"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你認為「成功」對你來說是什麼？</div>
+      <p class="q-hint">不是社會定義的，是你自己的版本</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="比如：『有選擇的自由，和不怕說不的勇氣』"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>你最想對十年前的自己說什麼？</div>
+      <p class="q-hint">安慰？警告？鼓勵？都可以</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="比如：『別急，你會走到你想去的地方的』"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>如果你可以選擇一種超能力，你選——</div>
+      <p class="q-hint">讀心術？隱身？時間暫停？飛行？還是別的？</p>
+      <div class="chip-group">
+        <span class="chip">讀心術</span>
+        <span class="chip">隱形</span>
+        <span class="chip">時間暫停</span>
+        <span class="chip">飛行</span>
+        <span class="chip">瞬間移動</span>
+        <span class="chip">預知未來</span>
+        <span class="chip">永遠不累</span>
+        <span class="chip">治癒他人</span>
+      </div>
+      <div class="input-row" style="margin-top:14px;">
+        <textarea class="text-area" placeholder="為什麼選這個？拿到之後第一件事做什麼？"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-label"><span class="q-mark">Q</span>有什麼想對我說的嗎？（可選）</div>
+      <p class="q-hint">這份問卷是我送你的，但回信也可以是雙向的</p>
+      <div class="input-row">
+        <textarea class="text-area" placeholder="任何話都可以，哪怕是『你這問卷也太長了吧』😄"></textarea>
+      </div>
+      <div class="print-answer"></div>
+    </div>
+  </section>
+
+  <!-- ========== SUBMIT ========== -->
+  <div class="submit-wrap">
+    <button class="submit-btn" onclick="handleSubmit()">
+      <span>完成問卷</span>
+      <span class="arrow">→</span>
+    </button>
+  </div>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <p class="footer-text">感 謝 你 認 真 填 寫</p>
+    <p class="footer-sub">A QUIET PORTRAIT · 2026</p>
+    <p class="footer-signature">— Aurevny.</p>
+  </footer>
+
+</div>
+
+<!-- 結果彈窗 -->
+<div class="result-panel" id="resultPanel">
+  <div class="result-box">
+    <button class="close-btn" onclick="closeResult()">✕</button>
+    <div style="text-align:center; margin-bottom: 28px;">
+      <div style="width:36px; height:1px; background:var(--gold); margin:0 auto 14px;"></div>
+      <div style="font-family:var(--font-sub); font-size:10px; letter-spacing:5px; color:var(--gold); text-transform:uppercase;">Your Answers</div>
+      <div style="font-family:var(--font-main); font-size:20px; color:var(--ink); letter-spacing:3px; margin-top:6px;">填寫結果預覽</div>
+    </div>
+    <div class="result-content" id="resultContent"></div>
+    <div class="result-actions">
+      <button onclick="copyAnswers()">📋 複製全部答案</button>
+      <button class="secondary" onclick="exportTXT()">📄 下載 .txt 文件</button>
+      <button class="secondary" onclick="window.print()">🖨️ 列印 / 存PDF</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== Chip toggle =====
+  document.querySelectorAll('.chip-group').forEach(group => {
+    group.addEventListener('click', e => {
+      const chip = e.target.closest('.chip');
+      if (!chip) return;
+      chip.classList.toggle('active');
+    });
+  });
+
+  // ===== MBTI single select =====
+  const mbtiGrid = document.querySelector('.mbti-grid');
+  if (mbtiGrid) {
+    mbtiGrid.addEventListener('click', e => {
+      const cell = e.target.closest('.mbti-cell');
+      if (!cell) return;
+      mbtiGrid.querySelectorAll('.mbti-cell').forEach(c => c.classList.remove('active'));
+      cell.classList.add('active');
+    });
+  }
+
+  // ===== Energy Slider =====
+  const slider = document.getElementById('energySlider');
+  const sliderFill = document.getElementById('sliderFill');
+  const sliderValue = document.getElementById('sliderValue');
+  const sliderLabel = document.getElementById('sliderLabel');
+  const sliderTicks = document.querySelectorAll('.slider-ticks span');
+
+  const energyLabels = {
+    1: '極度內向', 2: '偏內向', 3: '安靜型', 4: '選擇性社交', 5: '平衡型',
+    6: '略外向', 7: '社交達人', 8: '派對動物', 9: '人群發電機', 10: '永動機'
+  };
+
+  function updateSlider() {
+    const val = parseInt(slider.value, 10);
+    const pct = ((val - 1) / 9) * 100;
+    sliderFill.style.width = pct + '%';
+    sliderValue.textContent = val;
+    sliderLabel.textContent = energyLabels[val] || '';
+    sliderTicks.forEach((tick, idx) => {
+      tick.classList.toggle('passed', idx < val);
+    });
+  }
+  if (slider) {
+    slider.addEventListener('input', updateSlider);
+    updateSlider();
+  }
+
+  // ===== Color swatches =====
+  document.querySelectorAll('.color-row').forEach(row => {
+    row.addEventListener('click', e => {
+      const item = e.target.closest('.color-item');
+      if (!item) return;
+      item.classList.toggle('active');
+    });
+  });
+
+  // ===== Weather items =====
+  document.querySelectorAll('.weather-row').forEach(row => {
+    row.addEventListener('click', e => {
+      const item = e.target.closest('.weather-item');
+      if (!item) return;
+      row.querySelectorAll('.weather-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+    });
+  });
+
+  // ===== 收集答案 =====
+  function collectAnswers() {
+    const answers = [];
+    const sections = document.querySelectorAll('.section');
+
+    sections.forEach((sec) => {
+      const secTitle = sec.querySelector('.section-title span:first-child');
+      const secEn = sec.querySelector('.section-title .en');
+      const titleText = secTitle ? secTitle.textContent.trim() : '';
+      const enText = secEn ? secEn.textContent.trim() : '';
+      answers.push({ type: 'section', title: titleText, en: enText });
+
+      const cards = sec.querySelectorAll('.q-card');
+      cards.forEach(card => {
+        const qLabel = card.querySelector('.q-label');
+        const qText = qLabel ? qLabel.textContent.replace(/^Q/, '').trim() : '';
+        const parts = [];
+
+        // text-input
+        const textInputs = card.querySelectorAll('.text-input');
+        textInputs.forEach(t => { if (t.value.trim()) parts.push(t.value.trim()); });
+
+        // self-fill
+        const selfFills = card.querySelectorAll('.self-fill');
+        selfFills.forEach(s => { if (s.value.trim()) parts.push('✎ ' + s.value.trim()); });
+
+        // textarea
+        const textareas = card.querySelectorAll('.text-area');
+        textareas.forEach(t => { if (t.value.trim()) parts.push(t.value.trim()); });
+
+        // active chips
+        const activeChips = card.querySelectorAll('.chip.active');
+        if (activeChips.length) {
+          parts.push('【已選】' + Array.from(activeChips).map(c => c.textContent.trim()).join('、'));
+        }
+
+        // active color items
+        const activeColors = card.querySelectorAll('.color-item.active');
+        if (activeColors.length) {
+          const colText = Array.from(activeColors).map(c => {
+            const name = c.querySelector('.color-name');
+            return name ? name.textContent.trim() : '';
+          }).filter(Boolean).join('、');
+          if (colText) parts.push('【顏色】' + colText);
+        }
+
+        // active weather
+        const activeWeather = card.querySelectorAll('.weather-item.active');
+        if (activeWeather.length) {
+          const wText = Array.from(activeWeather).map(w => {
+            const name = w.querySelector('.weather-name');
+            return name ? name.textContent.trim() : '';
+          }).filter(Boolean).join('、');
+          if (wText) parts.push('【天氣】' + wText);
+        }
+
+        // active MBTI
+        const activeMbti = card.querySelectorAll('.mbti-cell.active');
+        if (activeMbti.length) {
+          parts.push('【MBTI】' + Array.from(activeMbti).map(m => m.textContent.trim()).join('、'));
+        }
+
+        // slider
+        const sliderEl = card.querySelector('.energy-slider');
+        if (sliderEl) {
+          const val = sliderEl.value;
+          const label = document.getElementById('sliderLabel');
+          const labText = label ? label.textContent : '';
+          parts.push('數值：' + val + '（' + labText + '）');
+        }
+
+        if (parts.length) {
+          answers.push({ type: 'question', q: qText, answer: parts.join('\n') });
+        }
+      });
+    });
+
+    return answers;
+  }
+
+  // ===== 格式化答案為文字 =====
+  function formatAnswers(answers) {
+    let text = '關於我的一封信\n';
+    text += '— 填寫完成 · ' + new Date().toLocaleDateString('zh-TW') + ' —\n\n';
+
+    answers.forEach(item => {
+      if (item.type === 'section') {
+        text += '\n▎' + item.title + ' ' + (item.en ? '(' + item.en + ')' : '') + '\n';
+        text += '─'.repeat(30) + '\n';
+      } else if (item.type === 'question') {
+        text += '\n▸ ' + item.q + '\n';
+        text += '  ' + item.answer.replace(/\n/g, '\n  ') + '\n';
+      }
+    });
+
+    text += '\n' + '─'.repeat(30) + '\n';
+    text += '感謝你認真填寫 · 2026 · Aurevny.\n';
+    return text;
+  }
+
+  // ===== 填寫到 print-answer 區域 =====
+  function fillPrintAnswers(answers) {
+    const sections = document.querySelectorAll('.section');
+    const questions = answers.filter(a => a.type === 'question');
+
+    sections.forEach(sec => {
+      const cards = sec.querySelectorAll('.q-card');
+      cards.forEach(card => {
+        const printDiv = card.querySelector('.print-answer');
+        if (!printDiv) return;
+        const qLabel = card.querySelector('.q-label');
+        const qText = qLabel ? qLabel.textContent.replace(/^Q/, '').trim() : '';
+        const found = questions.find(q => q.q === qText);
+        if (found) {
+          printDiv.textContent = '✓ ' + found.answer;
+        }
+      });
+    });
+  }
+
+  // ===== Submit 按鈕 =====
+  function handleSubmit() {
+    const btn = document.querySelector('.submit-btn span:first-child');
+    const btnArrow = document.querySelector('.submit-btn .arrow');
+    btn.textContent = '正在整理 ...';
+    if (btnArrow) btnArrow.style.display = 'none';
+
+    try {
+      const answers = collectAnswers();
+
+      if (answers.filter(a => a.type === 'question').length === 0) {
+        alert('請至少填寫一題再提交哦～');
+        btn.textContent = '完成問卷';
+        if (btnArrow) btnArrow.style.display = '';
+        return;
+      }
+
+      fillPrintAnswers(answers);
+
+      const resultText = formatAnswers(answers);
+      document.getElementById('resultContent').textContent = resultText;
+      document.getElementById('resultPanel').classList.add('show');
+
+      btn.textContent = '已提交 ✦';
+      setTimeout(() => {
+        btn.textContent = '完成問卷';
+        if (btnArrow) btnArrow.style.display = '';
+      }, 4000);
+
+    } catch(err) {
+      console.error('提交失敗：', err);
+      alert('提交時發生錯誤，請重試');
+      btn.textContent = '完成問卷';
+      if (btnArrow) btnArrow.style.display = '';
+    }
+  }
+
+  // ===== 關閉結果彈窗 =====
+  function closeResult() {
+    document.getElementById('resultPanel').classList.remove('show');
+  }
+
+  // ===== 複製答案 =====
+  function copyAnswers() {
+    const text = document.getElementById('resultContent').textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('已複製到剪貼板！直接貼到微信發給我就行 ✦');
+      }).catch(() => {
+        fallbackCopy(text);
+      });
+    } else {
+      fallbackCopy(text);
+    }
+  }
+
+  function fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      alert('已複製到剪貼板！直接貼到微信發給我就行 ✦');
+    } catch(e) {
+      alert('複製失敗，請手動選取文字複製');
+    }
+    document.body.removeChild(ta);
+  }
+
+  // ===== 下載 TXT =====
+  function exportTXT() {
+    const text = document.getElementById('resultContent').textContent;
+    const blob = new Blob(['\uFEFF' + text], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = '關於我的一封信_' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  // ===== 點擊彈窗背景關閉 =====
+  document.getElementById('resultPanel').addEventListener('click', e => {
+    if (e.target === document.getElementById('resultPanel')) {
+      closeResult();
+    }
+  });
+</script>
+<!-- ===================== 補丁：iOS Safari 友好 + 打印優化 ===================== -->
+    <script>
+    /* ---------- 1. 偵測 iOS Safari ---------- */
+    function isIOSSafari() {
+      const ua = navigator.userAgent;
+      const isIOS = /iP(ad|hone|od)/.test(ua);
+      const isSafari = /^((?!chrome|android).)*safari/i.test(ua) || 
+                       (navigator.vendor && navigator.vendor.includes('Apple'));
+      return isIOS && isSafari;
+    }
+    
+    /* ---------- 2. 手機端隱藏「列印 PDF」按鈕 ---------- */
+    if (isIOSSafari()) {
+      document.addEventListener('DOMContentLoaded', () => {
+        const printBtn = document.querySelector('.btn-print');
+        if (printBtn) {
+          printBtn.style.display = 'none';
+        }
+        // 提示用戶用複製 / TXT
+        const footer = document.querySelector('.footer p');
+        if (footer) {
+          footer.innerHTML += '<br><span style="font-size:11px;color:var(--elephant);">iOS 建議使用「複製答案」或「下載 .txt」</span>';
+        }
+      });
+    }
+    
+    /* ---------- 3. 打印前：把交互控件替換成純文本 ---------- */
+    function preparePrintFriendly() {
+      // 社交電量滑桿
+      document.querySelectorAll('.social-slider input[type="range"]').forEach(slider => {
+        const val = slider.value;
+        let desc = '平衡型';
+        if (val <= 3) desc = '極度內向';
+        else if (val <= 5) desc = '偏內向';
+        else if (val <= 7) desc = '平衡型';
+        else if (val <= 9) desc = '偏外向';
+        else desc = '永動機';
+    
+        const wrapper = slider.closest('.social-slider');
+        if (wrapper && !wrapper.querySelector('.print-value')) {
+          const span = document.createElement('span');
+          span.className = 'print-value';
+          span.style.cssText = 'display:none;font-size:14px;color:#1c1c1c;';
+          span.textContent = `社交電量：${val}/10（${desc}）`;
+          wrapper.appendChild(span);
+        }
+      });
+    
+      // Chip 選中項 → 純文字
+      document.querySelectorAll('.chips').forEach(group => {
+        if (group.querySelector('.print-chips')) return;
+        const selected = Array.from(group.querySelectorAll('.chip.selected'))
+          .map(c => c.textContent.trim())
+          .join('、');
+        if (selected) {
+          const span = document.createElement('span');
+          span.className = 'print-chips';
+          span.style.cssText = 'display:none;font-size:14px;color:#1c1c1c;';
+          span.textContent = '已選：' + selected;
+          group.parentNode.insertBefore(span, group.nextSibling);
+        }
+      });
+    
+      // 顏色選中 → 純文字
+      document.querySelectorAll('.color-grid').forEach(grid => {
+        if (grid.querySelector('.print-colors')) return;
+        const selected = Array.from(grid.querySelectorAll('.color-swatch.selected'))
+          .map(c => c.getAttribute('data-name') || '')
+          .filter(Boolean)
+          .join('、');
+        if (selected) {
+          const span = document.createElement('span');
+          span.className = 'print-colors';
+          span.style.cssText = 'display:none;font-size:14px;color:#1c1c1c;';
+          span.textContent = '喜歡的顏色：' + selected;
+          grid.parentNode.insertBefore(span, grid.nextSibling);
+        }
+      });
+    
+      // 天氣 icon → 純文字
+      document.querySelectorAll('.weather-icons').forEach(group => {
+        if (group.querySelector('.print-weather')) return;
+        const selected = Array.from(group.querySelectorAll('.weather-icon.selected'))
+          .map(w => w.getAttribute('data-name') || '')
+          .filter(Boolean)
+          .join('、');
+        if (selected) {
+          const span = document.createElement('span');
+          span.className = 'print-weather';
+          span.style.cssText = 'display:none;font-size:14px;color:#1c1c1c;';
+          span.textContent = '喜歡的天氣：' + selected;
+          group.parentNode.insertBefore(span, group.nextSibling);
+        }
+      });
+    
+      document.body.classList.add('print-mode');
+    }
+    
+    /* ---------- 4. 綁定列印按鈕 ---------- */
+    document.addEventListener('DOMContentLoaded', () => {
+      const printBtn = document.querySelector('.btn-print');
+      if (printBtn) {
+        printBtn.addEventListener('click', () => {
+          preparePrintFriendly();
+          setTimeout(() => {
+            window.print();
+            document.body.classList.remove('print-mode');
+          }, 100);
+        });
+      }
+    });
+    </script>
+    
+    <style>
+    /* ===================== 打印專用樣式 ===================== */
+    @media print {
+      @page { size: A4; margin: 14mm; }
+    
+      html, body {
+        width: 210mm !important;
+        height: auto !important;
+        background: #fff !important;
+        color: #1c1c1c !important;
+        font-family: "Noto Serif CJK SC", "Noto Serif SC", serif !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+    
+      /* 隱藏所有交互控件 */
+      button, .no-print, .social-slider input, .chips, .color-grid, .weather-icons, .self-fill, textarea, input {
+        display: none !important;
+      }
+    
+      /* 顯示打印態純文字 */
+      .print-value, .print-chips, .print-colors, .print-weather {
+        display: block !important;
+        margin: 4px 0 12px 0 !important;
+        font-size: 14px !important;
+        color: #1c1c1c !important;
+      }
+    
+      /* 打平佈局，Safari 最穩 */
+      .row, .card, .section {
+        display: block !important;
+        position: static !important;
+        transform: none !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+    
+      .card {
+        border: 1px solid #ddd !important;
+        padding: 4mm !important;
+        margin-bottom: 6mm !important;
+      }
+    
+      h1, h2, h3 {
+        color: #1c1c1c !important;
+        break-after: avoid;
+        page-break-after: avoid;
+      }
+    
+      /* 隱藏裝飾性元素 */
+      .decoration, .vertical-text, .gold-line {
+        display: none !important;
+      }
+    
+      .footer {
+        margin-top: 10mm;
+        font-size: 11px !important;
+        color: #666 !important;
+      }
+    }
+    </style>
+    <!-- ===================== 補丁結束 ===================== -->
+</body>
+</html>
