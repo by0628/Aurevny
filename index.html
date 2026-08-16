@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Opus-MT 翻译模型下载器（增强版）</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js">
+    </script>
+    <style>
+        /* (与之前样式基本相同，略作调整) */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: #f6f8fa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            max-width: 960px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+            padding: 32px 36px 40px;
+        }
+        h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #0d1117;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        h1 small {
+            font-size: 16px;
+            font-weight: 400;
+            color: #57606a;
+        }
+        .sub {
+            margin-top: 6px;
+            font-size: 15px;
+            color: #57606a;
+            border-left: 4px solid #d0d7de;
+            padding-left: 14px;
+            background: #f6f8fa;
+            border-radius: 0 8px 8px 0;
+            line-height: 1.5;
+        }
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin: 28px 0 18px;
+            align-items: center;
+        }
+        .btn {
+            border: none;
+            border-radius: 40px;
+            padding: 12px 28px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #eaeef2;
+            color: #1f2328;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        }
+        .btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            filter: brightness(0.96);
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            filter: none;
+        }
+        .btn-primary {
+            background: #2da44e;
+            color: white;
+        }
+        .btn-primary:hover:not(:disabled) {
+            background: #2c974b;
+        }
+        .btn-secondary {
+            background: #eaeef2;
+            color: #1f2328;
+        }
+        .btn-secondary:hover:not(:disabled) {
+            background: #d0d7de;
+        }
+        .badge {
+            font-size: 13px;
+            background: rgba(0, 0, 0, 0.06);
+            padding: 2px 16px;
+            border-radius: 30px;
+            font-weight: 500;
+        }
+        .select-source {
+            margin-left: auto;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .select-source select {
+            padding: 6px 12px;
+            border-radius: 30px;
+            border: 1px solid #d0d7de;
+            background: white;
+            font-size: 14px;
+        }
+        .log-container {
+            background: #0d1117;
+            border-radius: 14px;
+            padding: 18px 20px;
+            max-height: 420px;
+            min-height: 200px;
+            overflow-y: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            color: #e6edf3;
+            margin-top: 6px;
+            scroll-behavior: smooth;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+        .log-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .log-container::-webkit-scrollbar-track {
+            background: #161b22;
+            border-radius: 8px;
+        }
+        .log-container::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 8px;
+        }
+        .log-line {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            padding: 1px 0;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .log-line .icon {
+            display: inline-block;
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .log-line .ok {
+            color: #3fb950;
+        }
+        .log-line .fail {
+            color: #f85149;
+        }
+        .log-line .info {
+            color: #58a6ff;
+        }
+        .log-line .warn {
+            color: #d29922;
+        }
+        .log-line .size {
+            color: #8b949e;
+            font-size: 12px;
+            margin-left: 4px;
+        }
+        .log-line .fname {
+            color: #f0e6d0;
+        }
+        .summary {
+            margin-top: 18px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            border-top: 1px solid #d0d7de;
+            padding-top: 18px;
+        }
+        .stats {
+            font-size: 14px;
+            color: #24292f;
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+        .stats span {
+            background: #f6f8fa;
+            padding: 4px 14px;
+            border-radius: 30px;
+        }
+        .stats .ok-stat {
+            color: #1a7f37;
+        }
+        .stats .fail-stat {
+            color: #cf222e;
+        }
+        .footer-note {
+            font-size: 13px;
+            color: #57606a;
+            margin-top: 14px;
+            text-align: right;
+        }
+        @media (max-width: 600px) {
+            .card {
+                padding: 20px 16px;
+            }
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .select-source {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>
+            📦 Opus-MT 翻译模型下载器
+            <small>增强版 · 自动重试 + 双源切换</small>
+        </h1>
+        <div class="sub">
+            ⚡ 包含 zh-en 和 en-zh 方向 · 自动重试失败文件 · 适配 Transformers.js
+        </div>
+
+        <div class="toolbar">
+            <button class="btn btn-secondary" id="btnDownload">1. 开始下载所有文件</button>
+            <button class="btn btn-primary" id="btnZip" disabled>2. 打包保存到文件 (可选)</button>
+            <span class="badge" id="progressBadge">就绪</span>
+            <div class="select-source">
+                <label for="sourceSelect">数据源：</label>
+                <select id="sourceSelect">
+                    <option value="mirror">国内镜像 (hf-mirror.com)</option>
+                    <option value="official">HuggingFace 官方</option>
+                    <option value="auto" selected>自动切换 (镜像→官方)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="log-container" id="logContainer">
+            <div class="log-line"><span class="icon info">⏳</span><span class="fname">等待开始 …</span></div>
+        </div>
+
+        <div class="summary">
+            <div class="stats" id="statsArea">
+                <span>✅ 成功 <strong id="okCount">0</strong></span>
+                <span>❌ 失败 <strong id="failCount">0</strong></span>
+                <span>📁 已缓存 <strong id="cachedCount">0</strong></span>
+            </div>
+            <div style="font-size:13px; color:#57606a;">
+                重试次数: 最多3次
+            </div>
+        </div>
+        <div class="footer-note">
+            所有文件保存在内存中，打包后即可下载 ZIP
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // ---- 模型定义 ----
+            const MODELS = [{
+                id: 'opus-zh-en',
+                repo: 'Xenova/opus-mt-zh-en',
+                files: [
+                    'config.json',
+                    'generation_config.json',
+                    'quantize_config.json',
+                    'tokenizer.json',
+                    'tokenizer_config.json',
+                    'special_tokens_map.json',
+                    'vocab.json',
+                    'onnx/encoder_model_quantized.onnx',
+                    'onnx/decoder_model_quantized.onnx',
+                    'onnx/decoder_with_past_model_quantized.onnx'
+                ]
+            }, {
+                id: 'opus-en-zh',
+                repo: 'Xenova/opus-mt-en-zh',
+                files: [
+                    'config.json',
+                    'generation_config.json',
+                    'quantize_config.json',
+                    'tokenizer.json',
+                    'tokenizer_config.json',
+                    'special_tokens_map.json',
+                    'vocab.json',
+                    'onnx/encoder_model_quantized.onnx',
+                    'onnx/decoder_model_quantized.onnx',
+                    'onnx/decoder_with_past_model_quantized.onnx'
+                ]
+            }];
+
+            // ---- DOM refs ----
+            const logContainer = document.getElementById('logContainer');
+            const btnDownload = document.getElementById('btnDownload');
+            const btnZip = document.getElementById('btnZip');
+            const badge = document.getElementById('progressBadge');
+            const okCountEl = document.getElementById('okCount');
+            const failCountEl = document.getElementById('failCount');
+            const cachedCountEl = document.getElementById('cachedCount');
+            const sourceSelect = document.getElementById('sourceSelect');
+
+            // ---- State ----
+            const fileStore = new Map(); // key: "repoId/filePath" -> Blob
+            let downloadRunning = false;
+            let okCount = 0;
+            let failCount = 0;
+            let totalFiles = 0;
+
+            // ---- 源配置 ----
+            const SOURCES = {
+                mirror: 'https://hf-mirror.com',
+                official: 'https://huggingface.co'
+            };
+
+            function getBaseUrl() {
+                const mode = sourceSelect.value;
+                if (mode === 'auto') return null; // 自动模式
+                return SOURCES[mode] || SOURCES.mirror;
+            }
+
+            // ---- Helpers ----
+            function formatSize(bytes) {
+                if (bytes === undefined || bytes === null) return '? B';
+                if (bytes < 1024) return bytes + ' B';
+                if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+                return (bytes / 1048576).toFixed(1) + ' MB';
+            }
+
+            function getFileSize(blob) {
+                return blob ? blob.size : 0;
+            }
+
+            function logMessage(icon, cls, text, size) {
+                const div = document.createElement('div');
+                div.className = 'log-line';
+                const sizeStr = size !== undefined ? ` <span class="size">${formatSize(size)}</span>` : '';
+                div.innerHTML =
+                    `<span class="icon ${cls}">${icon}</span><span class="fname">${text}</span>${sizeStr}`;
+                logContainer.appendChild(div);
+                logContainer.scrollTop = logContainer.scrollHeight;
+            }
+
+            function updateStats() {
+                okCountEl.textContent = okCount;
+                failCountEl.textContent = failCount;
+                cachedCountEl.textContent = fileStore.size;
+                const total = okCount + failCount;
+                if (total > 0 && total === totalFiles) {
+                    badge.textContent = '✅ 下载完成';
+                    btnZip.disabled = false;
+                } else if (downloadRunning) {
+                    badge.textContent = `⏳ 下载中 ${total}/${totalFiles}`;
+                } else {
+                    badge.textContent = total > 0 ? `⏸ 已暂停` : '就绪';
+                }
+            }
+
+            // ---- 带重试和双源切换的下载 ----
+            async function downloadFileWithRetry(repo, filePath, maxRetries = 3) {
+                const key = `${repo}/${filePath}`;
+                if (fileStore.has(key)) {
+                    return { ok: true, cached: true, blob: fileStore.get(key) };
+                }
+
+                // 尝试各种源
+                const sourceList = [];
+                const mode = sourceSelect.value;
+                if (mode === 'auto') {
+                    sourceList.push('mirror', 'official');
+                } else {
+                    sourceList.push(mode);
+                }
+
+                let lastError = null;
+                for (const src of sourceList) {
+                    const base = SOURCES[src];
+                    if (!base) continue;
+                    const url = `${base}/${repo}/resolve/main/${filePath}`;
+                    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+                        try {
+                            const controller = new AbortController();
+                            const timeoutId = setTimeout(() => controller.abort(), 90000); // 90秒超时
+                            const resp = await fetch(url, { signal: controller.signal });
+                            clearTimeout(timeoutId);
+                            if (!resp.ok) {
+                                throw new Error(`HTTP ${resp.status} ${resp.statusText}`);
+                            }
+                            const blob = await resp.blob();
+                            if (blob.size === 0) throw new Error('Empty file');
+                            fileStore.set(key, blob);
+                            // 记录使用的源
+                            const srcName = src === 'mirror' ? '镜像' : '官方';
+                            return { ok: true, cached: false, blob, source: srcName };
+                        } catch (err) {
+                            lastError = err;
+                            // 如果是超时或网络错误，重试
+                            if (err.name === 'AbortError') {
+                                lastError = new Error('下载超时 (90s)');
+                            }
+                            if (attempt < maxRetries) {
+                                await new Promise(r => setTimeout(r, 2000 * attempt)); // 递增等待
+                            }
+                        }
+                    }
+                }
+
+                return { ok: false, error: lastError ? lastError.message : '未知错误' };
+            }
+
+            // ---- 下载所有模型 ----
+            async function runDownload() {
+                if (downloadRunning) return;
+                downloadRunning = true;
+                btnDownload.disabled = true;
+                btnZip.disabled = true;
+                badge.textContent = '⏳ 准备...';
+
+                // 重置统计
+                okCount = 0;
+                failCount = 0;
+                // 计算总未缓存文件
+                let totalNew = 0;
+                for (const model of MODELS) {
+                    for (const f of model.files) {
+                        const key = `${model.repo}/${f}`;
+                        if (!fileStore.has(key)) totalNew++;
+                    }
+                }
+                totalFiles = totalNew;
+                if (totalFiles === 0) {
+                    logMessage('ℹ️', 'info', '所有文件已缓存，无需下载');
+                    badge.textContent = '✅ 已缓存';
+                    btnDownload.disabled = false;
+                    btnZip.disabled = false;
+                    downloadRunning = false;
+                    updateStats();
+                    return;
+                }
+
+                logMessage('🚀', 'info', `开始下载 ${totalFiles} 个文件 (最多重试3次)...`);
+                let downloaded = 0;
+
+                for (const model of MODELS) {
+                    for (const filePath of model.files) {
+                        const key = `${model.repo}/${filePath}`;
+                        if (fileStore.has(key)) {
+                            okCount++;
+                            const blob = fileStore.get(key);
+                            logMessage('✅', 'ok', `[已缓存] ${model.id}/${filePath}`, getFileSize(blob));
+                            updateStats();
+                            continue;
+                        }
+
+                        const result = await downloadFileWithRetry(model.repo, filePath);
+                        if (result.ok) {
+                            okCount++;
+                            const size = getFileSize(result.blob);
+                            const srcInfo = result.source ? ` (${result.source})` : '';
+                            logMessage('✅', 'ok', `[${model.id}] ${filePath}${srcInfo}`, size);
+                        } else {
+                            failCount++;
+                            logMessage('❌', 'fail', `[${model.id}] ${filePath} 失败: ${result.error}`);
+                        }
+                        downloaded++;
+                        updateStats();
+
+                        // 每下载5个让出主线程
+                        if (downloaded % 5 === 0) {
+                            await new Promise(r => setTimeout(r, 0));
+                        }
+                    }
+                }
+
+                downloadRunning = false;
+                btnDownload.disabled = false;
+                updateStats();
+                if (failCount === 0 && okCount > 0) {
+                    badge.textContent = '✅ 全部成功';
+                    btnZip.disabled = false;
+                } else if (okCount > 0) {
+                    badge.textContent = `⚠️ 部分失败 (${failCount})`;
+                    btnZip.disabled = false;
+                } else {
+                    badge.textContent = '❌ 全部失败';
+                    btnZip.disabled = true;
+                }
+                logMessage('🏁', 'info', `下载结束 · 成功 ${okCount} · 失败 ${failCount}`);
+            }
+
+            // ---- 打包 ZIP (同之前) ----
+            async function buildZip() {
+                if (fileStore.size === 0) {
+                    alert('没有已下载的文件，请先执行下载。');
+                    return;
+                }
+                try {
+                    if (typeof JSZip === 'undefined') {
+                        throw new Error('JSZip 库未加载，请检查网络或刷新重试。');
+                    }
+                    const zip = new JSZip();
+                    for (const [key, blob] of fileStore) {
+                        const parts = key.split('/');
+                        const repo = parts.slice(0, 2).join('/');
+                        const filePath = parts.slice(2).join('/');
+                        let modelFolder = '';
+                        if (repo.includes('opus-mt-zh-en')) modelFolder = 'opus-zh-en';
+                        else if (repo.includes('opus-mt-en-zh')) modelFolder = 'opus-en-zh';
+                        else continue;
+                        const zipPath = `models/${modelFolder}/${filePath}`;
+                        zip.file(zipPath, blob);
+                    }
+                    logMessage('📦', 'info', '正在生成 ZIP ...');
+                    const zipBlob = await zip.generateAsync({ type: 'blob' });
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(zipBlob);
+                    link.download = 'opus-models.zip';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    setTimeout(() => URL.revokeObjectURL(link.href), 60000);
+                    logMessage('✅', 'ok', `ZIP 打包完成 (${formatSize(zipBlob.size)})`, zipBlob.size);
+                    badge.textContent = '📦 已打包';
+                } catch (err) {
+                    logMessage('❌', 'fail', `打包失败: ${err.message}`);
+                    alert('打包失败: ' + err.message);
+                }
+            }
+
+            // ---- 事件绑定 ----
+            btnDownload.addEventListener('click', runDownload);
+            btnZip.addEventListener('click', buildZip);
+
+            // ---- 初始日志 ----
+            if (typeof JSZip === 'undefined') {
+                logMessage('⚠️', 'fail', 'JSZip 库加载失败，请检查网络后刷新页面。');
+            } else {
+                logMessage('ℹ️', 'info', 'JSZip 已就绪。可选择数据源后点击下载。');
+            }
+        })();
+    </script>
+</body>
+</html>
