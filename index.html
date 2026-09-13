@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="全球热点态势感知系统 - 实时时事热点可视化大屏">
+    <title>全球热点态势感知系统</title>
+    
+    <!-- GitHub Pages: 确保正确处理资源路径 -->
+    <base href="./">
+    
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Leaflet CSS (OSM 地图) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    
+    <!-- ECharts CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+    
+    <style>
+        body { margin: 0; background: #0a0e1a; }
+        #loading {
+            position: fixed; inset: 0; z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+            background: #0a0e1a; color: #00f5d4;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 14px;
+        }
+        .spinner {
+            width: 36px; height: 36px;
+            border: 3px solid rgba(0,245,212,0.2);
+            border-top-color: #00f5d4;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 12px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div id="loading"><div class="spinner"></div> 系统初始化中...</div>
+    
+    <!-- 背景粒子层 -->
+    <canvas id="bg-particles"></canvas>
+    
+    <!-- 顶部 Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">
+                <div class="logo-icon">◢</div>
+                <div class="logo-text">
+                    <h1>全球热点态势感知系统</h1>
+                    <span class="subtitle">Global Hotspot Awareness Platform</span>
+                </div>
+            </div>
+        </div>
+        <div class="header-center">
+            <div class="status-bar">
+                <span class="status-dot"></span>
+                <span class="status-text">系统运行中</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="clock" id="clock">00:00:00</div>
+        </div>
+    </header>
+    
+    <!-- 主体内容 -->
+    <main class="dashboard">
+        <!-- 左栏：热点列表 -->
+        <aside class="panel-left">
+            <div class="panel-header">
+                <h2>🔥 时事热点</h2>
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="world">世界</button>
+                    <button class="tab-btn" data-tab="china">国内</button>
+                </div>
+            </div>
+            <div class="hotspot-list" id="hotspot-list"></div>
+        </aside>
+        
+        <!-- 中栏：地图 -->
+        <section class="panel-center">
+            <div class="map-container">
+                <div id="map"></div>
+                <div class="map-overlay">
+                    <div class="map-title">全球热点分布</div>
+                    <div class="map-controls">
+                        <button class="map-btn active" data-layer="street">🗺️ 矢量</button>
+                        <button class="map-btn" data-layer="satellite">🛰️ 卫星</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 右栏：图表 -->
+        <aside class="panel-right">
+            <div class="chart-card">
+                <h3>情感分布</h3>
+                <div id="chart-sentiment" class="chart"></div>
+            </div>
+            <div class="chart-card">
+                <h3>24h 热度趋势</h3>
+                <div id="chart-trend" class="chart"></div>
+            </div>
+            <div class="chart-card">
+                <h3>热点分类</h3>
+                <div id="chart-category" class="chart"></div>
+            </div>
+            <div class="chart-card">
+                <h3>传播热度</h3>
+                <div id="chart-gauge" class="chart"></div>
+            </div>
+        </aside>
+    </main>
+    
+    <!-- 底部事件流 -->
+    <footer class="event-stream">
+        <div class="stream-header">
+            <span class="stream-title">📡 实时事件流</span>
+            <span class="stream-badge" id="stream-count">0</span>
+        </div>
+        <div class="stream-list" id="stream-list"></div>
+    </footer>
+    
+    <!-- 弹窗 -->
+    <div class="popup-overlay" id="popup-overlay">
+        <div class="popup">
+            <button class="popup-close" onclick="closePopup()">✕</button>
+            <div class="popup-header">
+                <span class="popup-cat" id="popup-cat">科技</span>
+                <span class="popup-level" id="popup-level">critical</span>
+            </div>
+            <h3 id="popup-title">标题</h3>
+            <div class="popup-meta">
+                <span id="popup-location">📍 北京</span>
+                <span id="popup-heat">🔥 热度</span>
+                <span id="popup-time">⏰ 时间</span>
+            </div>
+            <div class="popup-body" id="popup-body"></div>
+        </div>
+    </div>
+    
+    <!-- 手机端底部导航 -->
+    <nav class="mobile-nav">
+        <button class="mobile-nav-btn active" data-view="map">🗺️<br>地图</button>
+        <button class="mobile-nav-btn" data-view="hotspots">🔥<br>热点</button>
+        <button class="mobile-nav-btn" data-view="charts">📊<br>分析</button>
+    </nav>
+
+    <!-- 
+        ═══════════════════════════════════════════
+        脚本加载顺序（不可更改）：
+        1. Leaflet (地图库)
+        2. mockData (内置数据兜底)
+        3. api-* (数据层 — 选一个用)
+        4. map / charts (视图层)
+        5. main (控制器)
+        6. snapshot-loader (可选：读快照)
+        7. main-realtime (实时绑定)
+        ═══════════════════════════════════════════
+    -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script src="js/mockData.js"></script>
+    
+    <!-- 
+        🔑 API 模式选择（默认用 zero-config，最稳）：
+        - api-zero-config.js → 零配置，内置动态数据，100%可用（推荐）
+        - api-github.js      → 连接真实API，需网络支持（可选升级）
+        只需要保留一个！建议先用 zero-config。
+    -->
+    <script src="js/api-zero-config.js"></script>
+    <!-- <script src="js/api-github.js"></script> -->
+    
+    <script src="js/map.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/snapshot-loader.js"></script>
+    <script src="js/main-realtime.js"></script>
+    
+    <script>
+        // 隐藏加载动画
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const loader = document.getElementById('loading');
+                if (loader) loader.style.opacity = '0';
+                setTimeout(() => { if (loader) loader.style.display = 'none'; }, 300);
+            }, 200);
+        });
+        
+        // 环境检测
+        window.__IS_GITHUB_PAGES = window.location.hostname.includes('github.io');
+        if (window.__IS_GITHUB_PAGES) {
+            console.log('🌐 [Env] GitHub Pages detected →', window.location.origin);
+        }
+    </script>
+</body>
+</html>
